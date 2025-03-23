@@ -58,7 +58,7 @@ If you haven't already installed Ollama, follow the instructions at [Ollama's of
 Make sure you have at least one model downloaded using:
 
 ```bash
-ollama pull gemma:2b
+ollama pull llama3.3
 ```
 
 or any other model of your choice.
@@ -74,8 +74,8 @@ FFmpeg is used to adjust the speed of audio playback. The application works with
 
 ## Usage
 
-1. Make sure Ollama is running in the background
-2. Run the application:
+
+1. Run the application:
 
 ```bash
 python ollama_gttsg.py
