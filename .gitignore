@@ -1,0 +1,5 @@
+# Create a .gitignore file
+echo "__pycache__/" > .gitignore
+echo "*.pyc" >> .gitignore
+echo "venv/" >> .gitignore
+echo "conversation_history.json" >> .gitignore
