@@ -48,7 +48,7 @@ Activate the virtual environment:
 ### 3. Install required Python packages
 
 ```bash
-pip install ollama pygame gtts
+pip install -r requirements.txt
 ```
 
 ### 4. Install Ollama

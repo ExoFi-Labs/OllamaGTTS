@@ -7,7 +7,6 @@ import time
 import queue
 import re
 import subprocess
-import sys
 import json
 
 # Suppress pygame welcome message
