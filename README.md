@@ -1,17 +1,32 @@
 # OllamaGTTS - Voice Assistant for Ollama
 
-A lightweight voice assistant that uses Ollama for generating responses and Google Text-to-Speech (gTTS) for speaking those responses aloud. This application allows for interactive voice conversations with any Ollama model installed on your system.
+A lightweight voice assistant that uses Ollama for AI responses and Google Text-to-Speech (gTTS) for voice output, featuring real-time voice interaction, conversation memory, and audio processing optimizations.
 
-## Features
+## Key Features
 
-- Text-to-speech output for Ollama responses using Google's TTS service
-- Conversation memory that persists between sessions
-- Smart text chunking for natural speech pauses
-- Optional audio speed adjustment using FFmpeg (if installed)
-- Works with all Ollama models
-- Model selection interface
-- Custom system prompts support
-- Response Interruption Support
+- **Voice Interaction**
+  - Real-time speech detection using Silero VAD
+  - Whisper-based transcription (faster-whisper)
+  - Interruptible speech playback
+  - Background audio processing
+
+- **Enhanced Audio**
+  - Google TTS with natural chunking
+  - FFmpeg-accelerated playback (1.15x speed - Optional)
+  - Audio queue prioritization system
+  - Automatic temp file cleanup
+
+- **Conversation Management**
+  - Persistent conversation history (JSON)
+  - Context-aware prompting
+  - Model-specific system prompts
+  - Configurable history length
+
+- **Technical Features**
+  - GPU acceleration support (CUDA)
+  - Multi-threaded audio processing
+  - Cross-platform compatibility
+  - Model selection interface
 
 ## Requirements
 
@@ -110,6 +125,16 @@ To change the TTS voice language, modify the `lang` parameter in the `create_and
 
 If you have FFmpeg installed, you can change the speech speed by modifying the `speed_factor` value in the `create_and_queue_audio` function. The default is 1.15 (15% faster than normal).
 
+# Audio settings (Modify these values in ollama_gttsg.py:)
+
+
+vad_threshold = 0.5      # Speech detection sensitivity (0.3-0.7)
+silence_duration = 1.0   # Seconds of silence to end speech
+speed_factor = 1.15      # Playback speed multiplier
+
+# Conversation settings
+max_history = 10         # Number of exchanges to remember
+
 ## Troubleshooting
 
 ### No audio output
@@ -120,7 +145,6 @@ If you have FFmpeg installed, you can change the speech speed by modifying the `
 
 ### Models not showing up
 
-- Verify that Ollama is running in the background
 - Make sure you've downloaded at least one model using `ollama pull`
 
 ### FFmpeg not found
