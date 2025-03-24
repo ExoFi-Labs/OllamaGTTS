@@ -11,6 +11,7 @@ A lightweight voice assistant that uses Ollama for generating responses and Goog
 - Works with all Ollama models
 - Model selection interface
 - Custom system prompts support
+- Response Interruption Support
 
 ## Requirements
 
@@ -71,9 +72,9 @@ FFmpeg is used to adjust the speed of audio playback. The application works with
 - **macOS**: Install using Homebrew: `brew install ffmpeg`
 - **Ubuntu/Debian**: Install using apt: `sudo apt install ffmpeg`
 - **Other Linux**: Use your distribution's package manager
+- **Untested on Mac/Ubuntu**
 
 ## Usage
-
 
 1. Run the application:
 
