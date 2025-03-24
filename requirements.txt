@@ -1,3 +1,7 @@
 ollama
 gtts
 pygame
+faster-whisper
+silero-vad
+pyaudio  # For microphone input
+numpy
