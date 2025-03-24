@@ -60,7 +60,7 @@ device = check_gpu_availability()
 print(f"Using device: {device}")
 
 class SpeechListener:
-    def __init__(self, transcription_callback, vad_threshold=0.5, silence_duration=1.0):
+    def __init__(self, transcription_callback, vad_threshold=0.4, silence_duration=1.2, buffer_duration=0.65):
         # Initialize audio parameters
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
@@ -70,6 +70,7 @@ class SpeechListener:
         # VAD parameters
         self.vad_threshold = vad_threshold
         self.silence_duration = silence_duration
+        self.buffer_duration = buffer_duration  # Buffer duration in seconds
         
         # Load the VAD model
         print("Loading Silero VAD model...")
@@ -105,6 +106,7 @@ class SpeechListener:
         self.last_speech_time = 0
         self.audio_stream = None
         self.pyaudio_instance = None
+        self.buffer_data = []  # Buffer to store initial audio data
         
     def start(self):
         self.running = True
@@ -157,6 +159,9 @@ class SpeechListener:
                         if not self.is_recording:
                             self.is_recording = True
                             print("\nSpeech detected, listening...")
+                            # Add buffer data to recording data
+                            self.recording_data.extend(self.buffer_data)
+                            self.buffer_data = []
                         self.recording_data.append(data)
                     else:
                         # No speech detected
@@ -169,6 +174,13 @@ class SpeechListener:
                             else:
                                 # Still within silence tolerance, keep recording
                                 self.recording_data.append(data)
+                        else:
+                            # Store data in buffer if not recording
+                            self.buffer_data.append(data)
+                            # Limit buffer size to buffer_duration
+                            max_buffer_size = int(self.buffer_duration * self.RATE / self.CHUNK)
+                            if len(self.buffer_data) > max_buffer_size:
+                                self.buffer_data.pop(0)
             except queue.Empty:
                 pass
             except Exception as e:
@@ -775,8 +787,9 @@ def main():
     # Initialize and start speech listener
     speech_listener = SpeechListener(
         transcription_callback=handle_transcription, 
-        vad_threshold=0.5,  # Adjust sensitivity (0.3-0.7 range works well)
-        silence_duration=1.0  # Wait 1 second of silence before processing
+        vad_threshold=0.4,  # Adjust sensitivity (0.3-0.7 range works well)
+        silence_duration=1.2,  # Wait 1 second of silence before processing
+        buffer_duration=0.65  # Buffer duration in seconds
     )
     speech_listener.start()
     
