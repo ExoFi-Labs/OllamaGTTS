@@ -67,6 +67,12 @@ Activate the virtual environment:
 pip install -r requirements.txt
 ```
 
+> [!NOTE] To install pyaudio in macOS environment, please install `portaudio` first.
+``` bash
+xcode-select --install
+brew install portaudio
+```
+
 ### 4. Install Ollama
 
 If you haven't already installed Ollama, follow the instructions at [Ollama's official website](https://ollama.ai/download).
